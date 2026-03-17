@@ -2,7 +2,10 @@
   "name": "prueba",
   "version": "1.0.0",
   "description": "mi first import model in threejs",
-  
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
   "devDependencies": {
     "parcel": "^2.16.4"
   },
