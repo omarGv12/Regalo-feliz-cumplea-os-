@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz Cumpleaños </title>
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -492,20 +492,14 @@
 
       let textoActual = '';
 
-      // Pool de audio precargado para evitar cortes
-      const POOL_SIZE = 10;
+      // Pool reducido — 3 instancias son suficientes
+      const POOL_SIZE = 3;
       const audioPool = Array.from({ length: POOL_SIZE }, () => {
         const a = new Audio('assets/teclado.mp3');
         a.volume = 0.18;
-        a.load();
         return a;
       });
       let poolIndex = 0;
-
-      // Desbloquear contexto de audio silenciosamente
-      const unlock = audioPool[0].cloneNode();
-      unlock.volume = 0;
-      unlock.play().catch(() => {});
 
       function playClick() {
         const a = audioPool[poolIndex % POOL_SIZE];
@@ -534,27 +528,19 @@
 
       function pausa(ms, fn) { setTimeout(fn, ms); }
 
-      // Esperar que todo el pool esté listo antes de escribir
-      Promise.all(
-        audioPool.map(a => new Promise(res => {
-          if (a.readyState >= 3) { res(); return; }
-          a.addEventListener('canplaythrough', res, { once: true });
-        }))
-      ).then(() => {
-        // Silencio inicial — 900ms
-        pausa(900, () => {
-          escribir(lineas[0], 95, () => {
-            pausa(450, () => {
-              textoActual += '\n';
-              escribir(lineas[1], 95, () => {
-                pausa(400, () => {
-                  textoActual += '\n';
-                  escribir(lineas[2], 95, () => {
-                    pausa(1200, () => {
-                      cursorEl.classList.remove('final-cursor-activo');
-                      cursorEl.style.opacity = '0';
-                      pausa(200, () => firmaEl.style.opacity = '1');
-                    });
+      // Empezar directamente sin esperar carga
+      pausa(900, () => {
+        escribir(lineas[0], 95, () => {
+          pausa(450, () => {
+            textoActual += '\n';
+            escribir(lineas[1], 95, () => {
+              pausa(400, () => {
+                textoActual += '\n';
+                escribir(lineas[2], 95, () => {
+                  pausa(1200, () => {
+                    cursorEl.classList.remove('final-cursor-activo');
+                    cursorEl.style.opacity = '0';
+                    pausa(200, () => firmaEl.style.opacity = '1');
                   });
                 });
               });
