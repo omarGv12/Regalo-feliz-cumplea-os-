@@ -173,36 +173,6 @@
 
   </style>
 
-  <!-- ══════════════════════════════
-       SCRIPTS
-  ══════════════════════════════ -->
-  <script>
-    // Corners del marco principal
-    function positionCorners() {
-      const W = window.innerWidth, H = window.innerHeight, m = 30;
-      document.getElementById('lineBottom').setAttribute('y1', H - m);
-      document.getElementById('lineBottom').setAttribute('y2', H - m);
-      document.getElementById('lineRight').setAttribute('x1', W - m);
-      document.getElementById('lineRight').setAttribute('x2', W - m);
-      document.getElementById('corner-tr').setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
-      document.getElementById('corner-tr').innerHTML = '<use href="#orn"/>';
-      document.getElementById('corner-bl').setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
-      document.getElementById('corner-bl').innerHTML = '<use href="#orn"/>';
-      document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
-      document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', positionCorners);
-    } else {
-      positionCorners();
-    }
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(positionCorners, 100);
-    });
-  </script>
-
   <script src="./js/intro.js"></script>
   <audio id="bg-music" data-src="assets/musica.mp3" loop preload="none"></audio>
   <script src="./js/scripts.js" type="module" defer></script>
@@ -504,7 +474,32 @@
         });
       });
     };
-  </script>  
+  </script>
+
+  <!-- ══════════════════════════════
+       CORNERS DEL MARCO PRINCIPAL
+  ══════════════════════════════ -->
+  <script>
+    function positionCorners() {
+      const W = window.innerWidth, H = window.innerHeight, m = 30;
+      document.getElementById('lineBottom').setAttribute('y1', H - m);
+      document.getElementById('lineBottom').setAttribute('y2', H - m);
+      document.getElementById('lineRight').setAttribute('x1', W - m);
+      document.getElementById('lineRight').setAttribute('x2', W - m);
+      document.getElementById('corner-tr').setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
+      document.getElementById('corner-tr').innerHTML = '<use href="#orn"/>';
+      document.getElementById('corner-bl').setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
+      document.getElementById('corner-bl').innerHTML = '<use href="#orn"/>';
+      document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
+      document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
+    }
+    positionCorners();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(positionCorners, 100);
+    });
+  </script>
 
 </body>
 </html>
