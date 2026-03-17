@@ -4,7 +4,7 @@
   "description": "mi first import model in threejs",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --public-url /Regalo-feliz-cumplea-os-/"
   },
   "devDependencies": {
     "parcel": "^2.16.4"
