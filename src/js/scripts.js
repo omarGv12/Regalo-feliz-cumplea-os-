@@ -65,10 +65,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x000000, 0);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFShadowMap;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.45;
+renderer.toneMappingExposure = 1.15;
 
 renderer.domElement.id = 'three-canvas';
 document.body.appendChild(renderer.domElement);
@@ -112,10 +112,10 @@ controls.maxPolarAngle = Math.PI / 2.4;
 // LUCES
 //////////////////////////
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.40);
 scene.add(ambientLight);
 
-const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+const keyLight = new THREE.DirectionalLight(0xffffff, 0.65);
 keyLight.position.set(5, 6, 2);
 keyLight.castShadow = true;
 keyLight.shadow.mapSize.width = 1024;
@@ -129,7 +129,7 @@ keyLight.shadow.camera.top = 8;
 keyLight.shadow.camera.bottom = -8;
 scene.add(keyLight);
 
-const fillLight = new THREE.DirectionalLight(0xffffff, 0.45);
+const fillLight = new THREE.DirectionalLight(0xffffff, 0.30);
 fillLight.position.set(-4, 3, 4);
 scene.add(fillLight);
 
@@ -486,10 +486,9 @@ function cardReturn(idx, onDone) {
   document.body.classList.remove('card-focus');
 }
 
-const cardClock = new THREE.Timer();
+const cardClock = new THREE.Clock();
 
 function tickCards() {
-  cardClock.update();
   const dt = Math.min(cardClock.getDelta(), 0.05);
 
   cardMeshes.forEach(card => {
