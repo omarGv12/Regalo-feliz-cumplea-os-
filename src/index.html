@@ -191,7 +191,11 @@
       document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
       document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
     }
-    positionCorners();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', positionCorners);
+    } else {
+      positionCorners();
+    }
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);

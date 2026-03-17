@@ -486,9 +486,10 @@ function cardReturn(idx, onDone) {
   document.body.classList.remove('card-focus');
 }
 
-const cardClock = new THREE.Clock();
+const cardClock = new THREE.Timer();
 
 function tickCards() {
+  cardClock.update();
   const dt = Math.min(cardClock.getDelta(), 0.05);
 
   cardMeshes.forEach(card => {

@@ -3,9 +3,9 @@ body {
   overflow: hidden;
   background: radial-gradient(
     circle at center,
-    #F8F4EC 0%,
-    #E8E3D9 40%,
-    #9CAF88 100%
+    #F2EDE3 0%,
+     #DDD6C8 40%,
+    #8EA97C 100%
   );
   animation: breathe 6s ease-in-out infinite;
   will-change: opacity;
