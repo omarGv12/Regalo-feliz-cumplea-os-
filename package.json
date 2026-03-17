@@ -1,0 +1,17 @@
+{
+  "name": "prueba",
+  "version": "1.0.0",
+  "description": "mi first import model in threejs",
+  
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "@parcel/config-default": "^2.16.4",
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "three": "^0.183.1"
+  },
+  "staticFiles": {
+    "staticOutPath": "assets"
+  }
+}

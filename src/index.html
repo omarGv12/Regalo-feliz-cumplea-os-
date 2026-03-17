@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños </title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@100;300&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@100;300&display=swap"></noscript>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap"></noscript>
+  <style>
+    /* ══════════════════════════════
+       INTRO OVERLAY
+    ══════════════════════════════ */
+    #intro-overlay {
+      position: fixed; inset: 0; z-index: 999;
+      background: radial-gradient(ellipse at 50% 80%, #1a1a14 0%, #0e0e0a 60%, #080806 100%);
+      pointer-events: all;
+      transition: opacity 1.2s ease;
+      will-change: opacity;
+    }
+    #intro-overlay.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    /* Body sin breathe mientras la intro está activa */
+    body.intro-active {
+      animation: none !important;
+    }
+    #intro-canvas {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      will-change: opacity;
+    }
+    #intro-base-light {
+      position: absolute;
+      bottom: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 340px; height: 180px;
+      background: radial-gradient(ellipse at center bottom,
+        rgba(200,169,110,0.13) 0%, rgba(200,169,110,0.05) 40%, transparent 70%);
+      filter: blur(18px);
+      pointer-events: none;
+      opacity: 0; transition: opacity 2.5s ease;
+      will-change: opacity;
+    }
+    #intro-base-light.show { opacity: 1; }
+    #intro-hint {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0; transition: opacity 0.5s ease;
+      will-change: opacity, transform;
+    }
+    #intro-hint.show { animation: introPulse 3s ease-in-out infinite; }
+    #intro-hint.attention { animation: introAttention 0.6s ease 2; }
+    @keyframes introPulse  { 0%,100%{opacity:0.7} 50%{opacity:1} }
+    @keyframes introAttention {
+      0%   { opacity:0.7; transform:translate(-50%,-50%) scale(1); }
+      50%  { opacity:1;   transform:translate(-50%,-50%) scale(1.06); }
+      100% { opacity:0.7; transform:translate(-50%,-50%) scale(1); }
+    }
+    #intro-btn {
+      font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 12px; letter-spacing: 0.5em; text-transform: uppercase;
+      color: #c8a96e; background: none; border: none; cursor: pointer;
+      padding: 10px 6px; position: relative; white-space: nowrap;
+      transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1),
+                  color 0.3s ease, text-shadow 0.3s ease;
+      text-shadow: 0 0 8px rgba(200,169,110,0.5), 0 0 20px rgba(200,169,110,0.2);
+    }
+    #intro-btn:hover, #intro-btn:active {
+      transform: scale(1.08); color: #dfc085;
+      text-shadow: 0 0 10px rgba(200,169,110,0.8), 0 0 28px rgba(200,169,110,0.45);
+    }
+    #intro-btn::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, #c8a96e, transparent);
+      transform: translateX(-50%); transition: width 1.4s ease;
+    }
+    #intro-btn:hover::after, #intro-btn:active::after { width: 100%; }
+    #intro-btn::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      width: 0; height: 0; border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(200,169,110,0.18) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+      opacity: 0; pointer-events: none;
+    }
+    #intro-btn:hover::before, #intro-btn:active::before {
+      width: 220px; height: 80px; opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       INTRO OVERLAY — se desvanece al hacer clic
+  ══════════════════════════════ -->
+  <div id="intro-overlay">
+    <canvas id="intro-canvas"></canvas>
+    <div id="intro-base-light"></div>
+    <div id="intro-hint">
+      <button id="intro-btn">✦ &nbsp; comenzar &nbsp; ✦</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       CONTENIDO PRINCIPAL (tu index original)
+  ══════════════════════════════ -->
+  <svg id="marco" xmlns="http://www.w3.org/2000/svg" opacity="0.45"
+       style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:99;">
+    <defs>
+      <linearGradient id="mH" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+        <stop offset="18%"  stop-color="white" stop-opacity="1"/>
+        <stop offset="31%"  stop-color="white" stop-opacity="0.08"/>
+        <stop offset="69%"  stop-color="white" stop-opacity="0.08"/>
+        <stop offset="82%"  stop-color="white" stop-opacity="1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="mV" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+        <stop offset="18%"  stop-color="white" stop-opacity="1"/>
+        <stop offset="31%"  stop-color="white" stop-opacity="0.08"/>
+        <stop offset="69%"  stop-color="white" stop-opacity="0.08"/>
+        <stop offset="82%"  stop-color="white" stop-opacity="1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <mask id="maskH"><rect width="100%" height="100%" fill="url(#mH)"/></mask>
+      <mask id="maskV"><rect width="100%" height="100%" fill="url(#mV)"/></mask>
+      <g id="orn">
+        <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+        <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23"
+              stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40"
+              stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
+        <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
+        <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
+        <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
+      </g>
+      <linearGradient id="goldShimmer" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"   stop-color="#E8B820"/>
+        <stop offset="40%"  stop-color="#D4A017"/>
+        <stop offset="70%"  stop-color="#C49010"/>
+        <stop offset="100%" stop-color="#D4A017"/>
+      </linearGradient>
+    </defs>
+    <g mask="url(#maskH)">
+      <line x1="0" y1="30" x2="100%" y2="30" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+      <line id="lineBottom" x1="0" y1="0" x2="100%" y2="0" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+    </g>
+    <g mask="url(#maskV)">
+      <line x1="30" y1="0" x2="30" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+      <line id="lineRight" x1="0" y1="0" x2="0" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+    </g>
+    <g transform="translate(30,30)"><use href="#orn"/></g>
+    <g id="corner-tr"></g>
+    <g id="corner-bl"></g>
+    <g id="corner-br"></g>
+  </svg>
+
+  <div id="hint">
+    <p>Toca la tapa para abrir ✦</p>
+  </div>
+  <style>
+
+  </style>
+
+  <!-- ══════════════════════════════
+       SCRIPTS
+  ══════════════════════════════ -->
+  <script>
+    // Corners del marco principal
+    function positionCorners() {
+      const W = window.innerWidth, H = window.innerHeight, m = 30;
+      document.getElementById('lineBottom').setAttribute('y1', H - m);
+      document.getElementById('lineBottom').setAttribute('y2', H - m);
+      document.getElementById('lineRight').setAttribute('x1', W - m);
+      document.getElementById('lineRight').setAttribute('x2', W - m);
+      document.getElementById('corner-tr').setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
+      document.getElementById('corner-tr').innerHTML = '<use href="#orn"/>';
+      document.getElementById('corner-bl').setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
+      document.getElementById('corner-bl').innerHTML = '<use href="#orn"/>';
+      document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
+      document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
+    }
+    positionCorners();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(positionCorners, 100);
+    });
+  </script>
+
+  <script src="./js/intro.js"></script>
+  <audio id="bg-music" data-src="assets/musica.mp3" loop preload="none"></audio>
+  <script src="./js/scripts.js" type="module" defer></script>
+
+  <!-- ══════════════════════════════
+       CELEBRACIÓN
+  ══════════════════════════════ -->
+  <!-- Elementos DOM de la celebración -->
+  <canvas id="cel-canvas"></canvas>
+
+  <div id="cel-titulo">
+    <h1>Feliz Cumpleaños</h1>
+    <span class="linea"></span>
+  </div>
+
+  <!-- Ramo izquierdo -->
+  <div id="flores-izq">
+    <div class="flowers">
+      <div class="flower flower--1">
+        <div class="flower__leafs flower__leafs--1">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+          <div class="flower__line__leaf flower__line__leaf--5"></div><div class="flower__line__leaf flower__line__leaf--6"></div>
+        </div>
+      </div>
+      <div class="flower flower--2">
+        <div class="flower__leafs flower__leafs--2">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+      <div class="flower flower--3">
+        <div class="flower__leafs flower__leafs--3">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+      <div class="growing-grass">
+        <div class="flower__grass flower__grass--1">
+          <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--1"></div><div class="flower__grass__leaf flower__grass__leaf--2"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--3"></div><div class="flower__grass__leaf flower__grass__leaf--4"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--5"></div><div class="flower__grass__leaf flower__grass__leaf--6"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--7"></div><div class="flower__grass__leaf flower__grass__leaf--8"></div>
+        </div>
+        <div class="flower__grass flower__grass--2">
+          <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+        </div>
+      </div>
+      <div class="flower__g-front">
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--4"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--5"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--6"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--7"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--8"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ramo derecho -->
+  <div id="flores-der">
+    <div class="flowers">
+      <div class="flower flower--1">
+        <div class="flower__leafs flower__leafs--1">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+          <div class="flower__line__leaf flower__line__leaf--5"></div><div class="flower__line__leaf flower__line__leaf--6"></div>
+        </div>
+      </div>
+      <div class="flower flower--2">
+        <div class="flower__leafs flower__leafs--2">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+      <div class="flower flower--3">
+        <div class="flower__leafs flower__leafs--3">
+          <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div>
+          <div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div>
+        </div>
+      </div>
+      <div class="growing-grass">
+        <div class="flower__grass flower__grass--1">
+          <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--1"></div><div class="flower__grass__leaf flower__grass__leaf--2"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--3"></div><div class="flower__grass__leaf flower__grass__leaf--4"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--5"></div><div class="flower__grass__leaf flower__grass__leaf--6"></div>
+          <div class="flower__grass__leaf flower__grass__leaf--7"></div><div class="flower__grass__leaf flower__grass__leaf--8"></div>
+        </div>
+        <div class="flower__grass flower__grass--2">
+          <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+        </div>
+      </div>
+      <div class="flower__g-front">
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--4"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--5"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--6"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--7"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--8"><div class="flower__g-front__leaf"></div></div>
+        <div class="flower__g-front__line"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/celebracion.js"></script>
+
+  <!-- ══════════════════════════════
+       PANTALLA FINAL — oculta hasta que celebracion.js la activa
+  ══════════════════════════════ -->
+  <div id="pantalla-final" style="
+    display:none; position:fixed; inset:0; z-index:10000;
+    background:#0E0E0E; align-items:center; justify-content:center;
+    opacity:0; transition: opacity 1.2s ease;
+    padding-bottom:12%;
+  ">
+    <div style="text-align:center; padding:2rem; max-width:700px;">
+      <div id="final-texto" style="
+        font-family:'Playfair Display',serif;
+        font-size:clamp(1.3rem,2.8vw,1.55rem);
+        font-style:italic; color:#c8a96e;
+        line-height:2.1; min-height:10rem; white-space:pre-wrap;
+      "><span id="final-cursor" style="
+        display:inline-block; width:2px; height:1em;
+        background:#c8a96e; margin-left:3px;
+        vertical-align:middle; opacity:0;
+      "></span></div>
+      <div id="final-firma" style="
+        margin-top:2.5rem;
+        font-family:'Jost',sans-serif; font-weight:100;
+        font-size:0.72rem; letter-spacing:0.45em;
+        color:rgba(200,169,110,0.4); text-transform:uppercase;
+        opacity:0; transition:opacity 2.5s ease;
+      ">— Omar</div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes finalBlink {
+      0%,100% { opacity:1; }
+      50%      { opacity:0; }
+    }
+    .final-cursor-activo {
+      opacity:1 !important;
+      animation: finalBlink 0.75s step-end infinite;
+    }
+  </style>
+
+  <script>
+    window.mostrarPantallaFinal = function() {
+      const panel    = document.getElementById('pantalla-final');
+      const textoEl  = document.getElementById('final-texto');
+      const cursorEl = document.getElementById('final-cursor');
+      const firmaEl  = document.getElementById('final-firma');
+
+      const lineas = [
+        "Gracias por ser una parte tan importante de mi vida,",
+        "y por ser, sin duda,",
+        "una de las mejores amigas que pude tener."
+      ];
+
+      // Mostrar panel
+      panel.style.display = 'flex';
+      cursorEl.classList.add('final-cursor-activo');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+      }));
+
+      let textoActual = '';
+
+      // Pool de audio precargado para evitar cortes
+      const POOL_SIZE = 10;
+      const audioPool = Array.from({ length: POOL_SIZE }, () => {
+        const a = new Audio('assets/teclado.mp3');
+        a.volume = 0.18;
+        a.load();
+        return a;
+      });
+      let poolIndex = 0;
+
+      // Desbloquear contexto de audio silenciosamente
+      const unlock = audioPool[0].cloneNode();
+      unlock.volume = 0;
+      unlock.play().catch(() => {});
+
+      function playClick() {
+        const a = audioPool[poolIndex % POOL_SIZE];
+        poolIndex++;
+        a.currentTime = 0;
+        a.play().catch(() => {});
+      }
+
+      function escribir(texto, velocidad, onDone) {
+        let i = 0;
+        function tick() {
+          if (i < texto.length) {
+            textoActual += texto[i];
+            textoEl.textContent = textoActual;
+            textoEl.appendChild(cursorEl);
+            if (texto[i] !== ' ' && texto[i] !== '\n') playClick();
+            i++;
+            const extra = texto[i - 1] === ' ' ? 60 : 0;
+            setTimeout(tick, velocidad + Math.random() * 70 + extra);
+          } else {
+            if (onDone) onDone();
+          }
+        }
+        tick();
+      }
+
+      function pausa(ms, fn) { setTimeout(fn, ms); }
+
+      // Esperar que todo el pool esté listo antes de escribir
+      Promise.all(
+        audioPool.map(a => new Promise(res => {
+          if (a.readyState >= 3) { res(); return; }
+          a.addEventListener('canplaythrough', res, { once: true });
+        }))
+      ).then(() => {
+        // Silencio inicial — 900ms
+        pausa(900, () => {
+          escribir(lineas[0], 95, () => {
+            pausa(450, () => {
+              textoActual += '\n';
+              escribir(lineas[1], 95, () => {
+                pausa(400, () => {
+                  textoActual += '\n';
+                  escribir(lineas[2], 95, () => {
+                    pausa(1200, () => {
+                      cursorEl.classList.remove('final-cursor-activo');
+                      cursorEl.style.opacity = '0';
+                      pausa(200, () => firmaEl.style.opacity = '1');
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    };
+  </script>  
+
+</body>
+</html>
