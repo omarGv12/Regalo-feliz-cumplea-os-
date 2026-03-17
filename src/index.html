@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz Cumpleaños </title>
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,55 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@100;300&display=swap"></noscript>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap"></noscript>
   <style>
+    /* ══════════════════════════════
+       MOBILE OVERLAY
+    ══════════════════════════════ */
+    #mobile-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: radial-gradient(ellipse at 50% 80%, #1a1a14 0%, #0e0e0a 60%, #080806 100%);
+      align-items: center; justify-content: center;
+      font-family: 'Jost', sans-serif;
+    }
+    @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+      #mobile-overlay { display: flex; }
+    }
+    .mobile-content {
+      text-align: center;
+      animation: mobileFloat 3s ease-in-out infinite;
+    }
+    @keyframes mobileFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .pixel-computer {
+      display: inline-block;
+      filter: drop-shadow(0 0 18px rgba(200,169,110,0.4));
+      margin-bottom: 12px;
+    }
+    .screen { animation: screenGlow 2s ease-in-out infinite alternate; }
+    @keyframes screenGlow {
+      from { fill: #0f3460; }
+      to   { fill: #162850; }
+    }
+    .cursor-px { animation: blinkPx 1s step-end infinite; }
+    @keyframes blinkPx {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .mobile-titulo {
+      font-size: 1.8rem; font-weight: 300;
+      color: #c8a96e; letter-spacing: 0.15em;
+      margin: 0 0 12px 0;
+      text-shadow: 0 0 20px rgba(200,169,110,0.5);
+    }
+    .mobile-texto {
+      font-size: 0.85rem; font-weight: 300;
+      color: rgba(200,169,110,0.6);
+      letter-spacing: 0.2em; line-height: 2;
+      margin: 0; text-transform: uppercase;
+    }
+
     /* ══════════════════════════════
        INTRO OVERLAY
     ══════════════════════════════ */
@@ -95,8 +144,47 @@
       width: 220px; height: 80px; opacity: 1;
     }
   </style>
+  <script>
+    window.IS_MOBILE = window.innerWidth <= 768 || (navigator.maxTouchPoints > 1 && window.innerWidth <= 1024);
+  </script>
 </head>
 <body>
+
+    <!-- ══════════════════════════════
+       MOBILE OVERLAY
+  ══════════════════════════════ -->
+  <div id="mobile-overlay">
+    <div class="mobile-content">
+      <div class="pixel-computer">
+        <svg width="120" height="110" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="10" y="5"  width="100" height="70" fill="#2a2a2a"/>
+          <rect x="14" y="9"  width="92"  height="62" fill="#1a1a2e"/>
+          <rect x="18" y="13" width="84"  height="54" fill="#0f3460" class="screen"/>
+          <rect x="22" y="17" width="30"  height="4"  fill="#c8a96e" opacity="0.6"/>
+          <rect x="22" y="24" width="76"  height="3"  fill="#c8a96e" opacity="0.3"/>
+          <rect x="22" y="30" width="60"  height="3"  fill="#c8a96e" opacity="0.3"/>
+          <rect x="22" y="36" width="70"  height="3"  fill="#c8a96e" opacity="0.3"/>
+          <rect x="22" y="42" width="50"  height="3"  fill="#c8a96e" opacity="0.3"/>
+          <rect x="56" y="55" width="8" height="10" fill="#c8a96e" class="cursor-px"/>
+          <rect x="50" y="75" width="20"  height="8"  fill="#2a2a2a"/>
+          <rect x="35" y="83" width="50"  height="6"  fill="#2a2a2a"/>
+          <rect x="33" y="89" width="54"  height="4"  fill="#1a1a1a"/>
+          <rect x="20" y="96" width="80"  height="12" fill="#2a2a2a" rx="2"/>
+          <rect x="24" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="32" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="40" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="48" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="56" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="64" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="72" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="80" y="99" width="6"   height="4"  fill="#3a3a3a"/>
+          <rect x="36" y="105" width="48" height="3"  fill="#3a3a3a"/>
+        </svg>
+      </div>
+      <p class="mobile-titulo">Noup. 🙅</p>
+      <p class="mobile-texto">Esto no se ve bien en celular.<br>Ábrelo en tu compu.</p>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════
        INTRO OVERLAY — se desvanece al hacer clic
@@ -482,17 +570,19 @@
   ══════════════════════════════ -->
   <script>
     function positionCorners() {
-      const W = window.innerWidth, H = window.innerHeight, m = 30;
-      document.getElementById('lineBottom').setAttribute('y1', H - m);
-      document.getElementById('lineBottom').setAttribute('y2', H - m);
-      document.getElementById('lineRight').setAttribute('x1', W - m);
-      document.getElementById('lineRight').setAttribute('x2', W - m);
-      document.getElementById('corner-tr').setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
-      document.getElementById('corner-tr').innerHTML = '<use href="#orn"/>';
-      document.getElementById('corner-bl').setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
-      document.getElementById('corner-bl').innerHTML = '<use href="#orn"/>';
-      document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
-      document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
+      try {
+        const W = window.innerWidth, H = window.innerHeight, m = 30;
+        document.getElementById('lineBottom').setAttribute('y1', H - m);
+        document.getElementById('lineBottom').setAttribute('y2', H - m);
+        document.getElementById('lineRight').setAttribute('x1', W - m);
+        document.getElementById('lineRight').setAttribute('x2', W - m);
+        document.getElementById('corner-tr').setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
+        document.getElementById('corner-tr').innerHTML = '<use href="#orn"/>';
+        document.getElementById('corner-bl').setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
+        document.getElementById('corner-bl').innerHTML = '<use href="#orn"/>';
+        document.getElementById('corner-br').setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
+        document.getElementById('corner-br').innerHTML = '<use href="#orn"/>';
+      } catch(e) {}
     }
     positionCorners();
     let resizeTimer;
