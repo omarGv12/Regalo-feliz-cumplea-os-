@@ -222,19 +222,6 @@
       </linearGradient>
       <mask id="maskH"><rect width="100%" height="100%" fill="url(#mH)"/></mask>
       <mask id="maskV"><rect width="100%" height="100%" fill="url(#mV)"/></mask>
-      <g id="orn">
-        <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-        <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23"
-              stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40"
-              stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
-        <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
-        <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
-        <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
-      </g>
       <linearGradient id="goldShimmer" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%"   stop-color="#E8B820"/>
         <stop offset="40%"  stop-color="#D4A017"/>
@@ -244,16 +231,60 @@
     </defs>
     <g mask="url(#maskH)">
       <line x1="0" y1="30" x2="100%" y2="30" stroke="url(#goldShimmer)" stroke-width="0.7"/>
-      <line id="lineBottom" x1="0" y1="0" x2="100%" y2="0" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+      <line x1="0" y1="calc(100% - 30px)" x2="100%" y2="calc(100% - 30px)" stroke="url(#goldShimmer)" stroke-width="0.7"/>
     </g>
     <g mask="url(#maskV)">
       <line x1="30" y1="0" x2="30" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"/>
-      <line id="lineRight" x1="0" y1="0" x2="0" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"/>
+      <line x1="calc(100% - 30px)" y1="0" x2="calc(100% - 30px)" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"/>
     </g>
-    <g transform="translate(30,30)"><use href="#orn"/></g>
-   <g id="corner-tr"><title>tr</title></g>
-<g id="corner-bl"><title>bl</title></g>
-<g id="corner-br"><title>br</title></g>
+    <!-- corner top-left -->
+    <g transform="translate(30,30)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
+    </g>
+    <!-- corner top-right -->
+    <g transform="translate(calc(100% - 30px),30) scale(-1,1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
+    </g>
+    <!-- corner bottom-left -->
+    <g transform="translate(30,calc(100% - 30px)) scale(1,-1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
+    </g>
+    <!-- corner bottom-right -->
+    <g transform="translate(calc(100% - 30px),calc(100% - 30px)) scale(-1,-1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <circle cx="0"  cy="0"  r="1.5" fill="#D4A017"/>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"/>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"/>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"/>
+    </g>
   </svg>
 
   <div id="hint">
@@ -552,45 +583,6 @@
     };
   </script>
 
-  <!-- ══════════════════════════════
-       CORNERS DEL MARCO PRINCIPAL
-  ══════════════════════════════ -->
-  <script>
-    function makeUse() {
-      const u = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-      u.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#orn');
-      u.setAttribute('href', '#orn');
-      return u;
-    }
-    function positionCorners() {
-      try {
-        const W = window.innerWidth, H = window.innerHeight, m = 30;
-        document.getElementById('lineBottom').setAttribute('y1', H - m);
-        document.getElementById('lineBottom').setAttribute('y2', H - m);
-        document.getElementById('lineRight').setAttribute('x1', W - m);
-        document.getElementById('lineRight').setAttribute('x2', W - m);
-        const tr = document.getElementById('corner-tr');
-        tr.setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
-        if (!tr.querySelector('use')) tr.appendChild(makeUse());
-        const bl = document.getElementById('corner-bl');
-        bl.setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
-        if (!bl.querySelector('use')) bl.appendChild(makeUse());
-        const br = document.getElementById('corner-br');
-        br.setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
-        if (!br.querySelector('use')) br.appendChild(makeUse());
-      } catch(e) {}
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', positionCorners);
-    } else {
-      positionCorners();
-    }
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(positionCorners, 100);
-    });
-  </script>
 
 </body>
 </html>
