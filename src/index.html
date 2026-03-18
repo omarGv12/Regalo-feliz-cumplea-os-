@@ -556,6 +556,12 @@
        CORNERS DEL MARCO PRINCIPAL
   ══════════════════════════════ -->
   <script>
+    function makeUse() {
+      const u = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      u.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#orn');
+      u.setAttribute('href', '#orn');
+      return u;
+    }
     function positionCorners() {
       try {
         const W = window.innerWidth, H = window.innerHeight, m = 30;
@@ -565,13 +571,13 @@
         document.getElementById('lineRight').setAttribute('x2', W - m);
         const tr = document.getElementById('corner-tr');
         tr.setAttribute('transform', `translate(${W-m},${m}) scale(-1,1)`);
-        if (!tr.querySelector('use')) tr.innerHTML = '<use href="#orn"/>';
+        if (!tr.querySelector('use')) tr.appendChild(makeUse());
         const bl = document.getElementById('corner-bl');
         bl.setAttribute('transform', `translate(${m},${H-m}) scale(1,-1)`);
-        if (!bl.querySelector('use')) bl.innerHTML = '<use href="#orn"/>';
+        if (!bl.querySelector('use')) bl.appendChild(makeUse());
         const br = document.getElementById('corner-br');
         br.setAttribute('transform', `translate(${W-m},${H-m}) scale(-1,-1)`);
-        if (!br.querySelector('use')) br.innerHTML = '<use href="#orn"/>';
+        if (!br.querySelector('use')) br.appendChild(makeUse());
       } catch(e) {}
     }
     if (document.readyState === 'loading') {
