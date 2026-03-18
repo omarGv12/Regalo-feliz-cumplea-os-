@@ -86,17 +86,6 @@
       </linearGradient>
       <mask id="maskH"><rect width="100%" height="100%" fill="url(#mH)"></rect></mask>
       <mask id="maskV"><rect width="100%" height="100%" fill="url(#mV)"></rect></mask>
-      <g id="orn">
-        <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
-        <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-        <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
-        <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
-        <circle cx="0" cy="0" r="1.5" fill="#D4A017"></circle>
-        <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"></circle>
-        <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"></circle>
-        <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"></circle>
-      </g>
       <linearGradient id="goldShimmer" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#E8B820"></stop>
         <stop offset="40%" stop-color="#D4A017"></stop>
@@ -106,16 +95,60 @@
     </defs>
     <g mask="url(#maskH)">
       <line x1="0" y1="30" x2="100%" y2="30" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
-      <line id="lineBottom" x1="0" y1="0" x2="100%" y2="0" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
+      <line x1="0" y1="calc(100% - 30px)" x2="100%" y2="calc(100% - 30px)" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
     </g>
     <g mask="url(#maskV)">
       <line x1="30" y1="0" x2="30" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
-      <line id="lineRight" x1="0" y1="0" x2="0" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
+      <line x1="calc(100% - 30px)" y1="0" x2="calc(100% - 30px)" y2="100%" stroke="url(#goldShimmer)" stroke-width="0.7"></line>
     </g>
-    <g transform="translate(30,30)"><use href="#orn"></use></g>
-   <g id="corner-tr"><title>tr</title></g>
-<g id="corner-bl"><title>bl</title></g>
-<g id="corner-br"><title>br</title></g>
+    <!-- corner top-left -->
+    <g transform="translate(30,30)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <circle cx="0" cy="0" r="1.5" fill="#D4A017"></circle>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"></circle>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+    </g>
+    <!-- corner top-right -->
+    <g transform="translate(calc(100% - 30px),30) scale(-1,1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <circle cx="0" cy="0" r="1.5" fill="#D4A017"></circle>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"></circle>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+    </g>
+    <!-- corner bottom-left -->
+    <g transform="translate(30,calc(100% - 30px)) scale(1,-1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <circle cx="0" cy="0" r="1.5" fill="#D4A017"></circle>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"></circle>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+    </g>
+    <!-- corner bottom-right -->
+    <g transform="translate(calc(100% - 30px),calc(100% - 30px)) scale(-1,-1)">
+      <path d="M0,0 C6,10 14,16 22,22" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+      <path d="M22,22 C24,10 36,2 46,8 C56,14 56,28 46,32 C36,36 28,28 32,22 C34,18 40,18 40,23" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M22,22 C10,24 2,36 8,46 C14,56 28,56 32,46 C36,36 28,28 22,32 C18,34 18,40 23,40" stroke="#D4A017" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M8,6 C12,-2 26,0 22,8 C18,12 10,10 8,6Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <path d="M6,8 C-2,12 0,26 8,22 C12,18 10,10 6,8Z" stroke="#D4A017" stroke-width="0.8" fill="none" stroke-linecap="round"></path>
+      <circle cx="0" cy="0" r="1.5" fill="#D4A017"></circle>
+      <circle cx="22" cy="22" r="1.2" fill="#D4A017" opacity="0.8"></circle>
+      <circle cx="40" cy="23" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+      <circle cx="23" cy="40" r="1.0" fill="#D4A017" opacity="0.65"></circle>
+    </g>
   </svg>
 
   <div id="hint">
@@ -304,10 +337,6 @@
 
   <script>window.mostrarPantallaFinal=function(){let e=document.getElementById("pantalla-final"),t=document.getElementById("final-texto"),a=document.getElementById("final-cursor"),n=document.getElementById("final-firma");e.style.display="flex",a.classList.add("final-cursor-activo"),requestAnimationFrame(()=>requestAnimationFrame(()=>{e.style.opacity="1"}));let i="",l=Array.from({length:3},()=>{let e=new Audio("assets/teclado.mp3");return e.volume=.18,e}),o=0;function r(e,n,r){let s=0;!function m(){if(s<e.length){let r;t.textContent=i+=e[s],t.appendChild(a)," "!==e[s]&&"\n"!==e[s]&&(r=l[o%3],o++,r.currentTime=0,r.play().catch(()=>{})),setTimeout(m,n+70*Math.random()+60*(" "===e[++s-1]))}else r&&r()}()}function s(e,t){setTimeout(t,e)}s(900,()=>{r("Gracias por ser una parte tan importante de mi vida,",95,()=>{s(450,()=>{i+="\n",r("y por ser, sin duda,",95,()=>{s(400,()=>{i+="\n",r("una de las mejores amigas que pude tener.",95,()=>{s(1200,()=>{a.classList.remove("final-cursor-activo"),a.style.opacity="0",s(200,()=>n.style.opacity="1")})})})})})})})};</script>
 
-  <!-- ══════════════════════════════
-       CORNERS DEL MARCO PRINCIPAL
-  ══════════════════════════════ -->
-  <script>let resizeTimer;function makeUse(){let e=document.createElementNS("http://www.w3.org/2000/svg","use");return e.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#orn"),e.setAttribute("href","#orn"),e}function positionCorners(){try{let e=window.innerWidth,t=window.innerHeight;document.getElementById("lineBottom").setAttribute("y1",t-30),document.getElementById("lineBottom").setAttribute("y2",t-30),document.getElementById("lineRight").setAttribute("x1",e-30),document.getElementById("lineRight").setAttribute("x2",e-30);let n=document.getElementById("corner-tr");n.setAttribute("transform",`translate(${e-30},30) scale(-1,1)`),n.querySelector("use")||n.appendChild(makeUse());let r=document.getElementById("corner-bl");r.setAttribute("transform",`translate(30,${t-30}) scale(1,-1)`),r.querySelector("use")||r.appendChild(makeUse());let i=document.getElementById("corner-br");i.setAttribute("transform",`translate(${e-30},${t-30}) scale(-1,-1)`),i.querySelector("use")||i.appendChild(makeUse())}catch(e){}}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",positionCorners):positionCorners(),window.addEventListener("resize",()=>{clearTimeout(resizeTimer),resizeTimer=setTimeout(positionCorners,100)});</script>
 
 
 </body></html>
